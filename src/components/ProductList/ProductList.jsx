@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Avatar, List, Spin } from 'antd';
+import { Avatar, List, Modal,Button } from 'antd';
 import {fetchProducts} from './../../store/actions'
 import { CreateProduct } from '../ProductForm/CreateProduct';
 
@@ -8,6 +8,7 @@ export const ProductList = () => {
   const dispatch = useDispatch();
   const products = useSelector((store) => store.products).sort((a, b) => b.id - a.id)
   const productsLoading = useSelector((store) => store.productsLoading)
+  const [isModalOpen, setIsModalOpen] = useState(false)
 
   useEffect(() => {
     dispatch(fetchProducts())
@@ -15,10 +16,28 @@ export const ProductList = () => {
 
   // console.log('products', products)
   
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  }
+
   return (
     <div>
-      <CreateProduct />
+      <Modal
+        title="Form" 
+        open={isModalOpen}
+        onCancel={closeModal}
+        footer={false}
+      >
+        <CreateProduct close={closeModal} />
+      </Modal>
       <h1>Products</h1>
+      <Button type="primary" onClick={showModal}>
+        Open Modal
+      </Button>
       <List
         loading={productsLoading}
         itemLayout="horizontal"

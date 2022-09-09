@@ -3,7 +3,7 @@ import { Button, Form, Input, Upload } from "antd";
 import { createProduct } from '../../store/actions';
 import { useDispatch } from 'react-redux';
 
-export const CreateProduct = () => {
+export const CreateProduct = ({close}) => {
   const dispatch = useDispatch();
   const [form] =Form.useForm()
 
@@ -11,7 +11,11 @@ export const CreateProduct = () => {
     console.log("Success:", values);
 
     dispatch(createProduct(values))
-    form.resetFields()
+
+    setTimeout(() => {
+      form.resetFields()  
+    }, 0);
+    close()
   };
 
   const onFinishFailed = (errorInfo) => {

@@ -4,7 +4,6 @@ export const BASE_API_URL = 'http://178.62.221.120/api';
 export const FETCH_PRODUCTS = 'FETCH_PRODUCTS';
 export const RECEIVE_PRODUCTS = 'RECEIVE_PRODUCTS';
 
-
 export const getProducts = () => ({
   type: FETCH_PRODUCTS
 })
@@ -48,7 +47,7 @@ export const createProduct = (payload) => {
       }
       console.log(response.data)
     } catch (error) {
-      console.error(error);
+      console.error('ERROR FROM API', error);
     }
   }
 }
