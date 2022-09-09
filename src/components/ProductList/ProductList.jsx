@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Avatar, List, Modal,Button } from 'antd';
-import {fetchProducts} from './../../store/actions'
+import {fetchProducts, setModalState} from './../../store/actions'
 import { CreateProduct } from '../ProductForm/CreateProduct';
 
 export const ProductList = () => {
   const dispatch = useDispatch();
   const products = useSelector((store) => store.products).sort((a, b) => b.id - a.id)
   const productsLoading = useSelector((store) => store.productsLoading)
-  const [isModalOpen, setIsModalOpen] = useState(false)
+  const isModalOpen = useSelector((store) => store.isModalOpen)
+  // const [isModalOpen, setIsModalOpen] = useState(false)
 
   useEffect(() => {
     dispatch(fetchProducts())
@@ -17,12 +18,14 @@ export const ProductList = () => {
   // console.log('products', products)
   
   const showModal = () => {
-    setIsModalOpen(true);
+    dispatch(setModalState(true));
   };
 
   const closeModal = () => {
-    setIsModalOpen(false);
+    dispatch(setModalState(false));
   }
+
+  console.log('isModalOpen', isModalOpen)
 
   return (
     <div>
@@ -32,7 +35,7 @@ export const ProductList = () => {
         onCancel={closeModal}
         footer={false}
       >
-        <CreateProduct close={closeModal} />
+        <CreateProduct />
       </Modal>
       <h1>Products</h1>
       <Button type="primary" onClick={showModal}>

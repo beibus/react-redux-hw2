@@ -1,9 +1,9 @@
 import React, {useState} from "react";
 import { Button, Form, Input, Upload } from "antd";
-import { createProduct } from '../../store/actions';
+import { createProduct, setModalState } from '../../store/actions';
 import { useDispatch } from 'react-redux';
 
-export const CreateProduct = ({close}) => {
+export const CreateProduct = () => {
   const dispatch = useDispatch();
   const [form] =Form.useForm()
 
@@ -15,7 +15,8 @@ export const CreateProduct = ({close}) => {
     setTimeout(() => {
       form.resetFields()  
     }, 0);
-    close()
+
+    dispatch(setModalState(false))
   };
 
   const onFinishFailed = (errorInfo) => {

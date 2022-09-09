@@ -3,6 +3,7 @@ export const BASE_API_URL = 'http://178.62.221.120/api';
 
 export const FETCH_PRODUCTS = 'FETCH_PRODUCTS';
 export const RECEIVE_PRODUCTS = 'RECEIVE_PRODUCTS';
+export const SET_MODAL_STATE = 'SET_MODAL_STATE';
 
 export const getProducts = () => ({
   type: FETCH_PRODUCTS
@@ -12,6 +13,12 @@ export const setProducts = (data) => ({
   type: RECEIVE_PRODUCTS,
   payload: data
 })
+
+export const setModalState = (state) => ({
+  type: SET_MODAL_STATE,
+  isOpen: state
+})
+
 
 export const fetchProducts = () => {
   return async (dispatch) => {

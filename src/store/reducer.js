@@ -1,16 +1,23 @@
 import { 
   FETCH_PRODUCTS, 
-  RECEIVE_PRODUCTS 
+  RECEIVE_PRODUCTS,
+  SET_MODAL_STATE
 } from './actions';
 
 const initialState = {
   products: [],
-  productsLoading: false
+  productsLoading: false,
+  isModalOpen: false
 }
 
 export default function reducer(state = initialState, action) {
   switch (action.type) {
-    
+    case SET_MODAL_STATE: 
+      return {
+        ...state,
+        isModalOpen: action.isOpen,
+      }
+
     case FETCH_PRODUCTS: 
       return {
         ...state,
