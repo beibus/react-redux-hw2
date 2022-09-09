@@ -1,11 +1,17 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import { Button, Form, Input, Upload } from "antd";
 import { createProduct, setModalState } from '../../store/actions';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 export const CreateProduct = () => {
   const dispatch = useDispatch();
+  const editProduct = useSelector((store) => store.editProduct)
   const [form] =Form.useForm()
+
+  useEffect(() => {
+    console.log('editProduct', editProduct)
+    // form.setValues(editProduct)
+  }, [editProduct])
 
   const onFinish = (values) => {
     console.log("Success:", values);
@@ -19,6 +25,7 @@ export const CreateProduct = () => {
     dispatch(setModalState(false))
   };
 
+  console.log('editProduct', editProduct)
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
   };

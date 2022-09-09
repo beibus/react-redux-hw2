@@ -4,6 +4,7 @@ export const BASE_API_URL = 'http://178.62.221.120/api';
 export const FETCH_PRODUCTS = 'FETCH_PRODUCTS';
 export const RECEIVE_PRODUCTS = 'RECEIVE_PRODUCTS';
 export const SET_MODAL_STATE = 'SET_MODAL_STATE';
+export const SET_PRODUCT = 'SET_PRODUCT';
 
 export const getProducts = () => ({
   type: FETCH_PRODUCTS
@@ -17,6 +18,11 @@ export const setProducts = (data) => ({
 export const setModalState = (state) => ({
   type: SET_MODAL_STATE,
   isOpen: state
+})
+
+export const setEditProduct = (product) => ({
+  type: SET_PRODUCT,
+  payload: product
 })
 
 
@@ -48,11 +54,9 @@ export const createProduct = (payload) => {
     
     try {
       const response = await axios.post(`${BASE_API_URL}/products/create`, data);
-      console.log('response', response)
       if (response.status === 201) {
         dispatch(fetchProducts())
       }
-      console.log(response.data)
     } catch (error) {
       console.error('ERROR FROM API', error);
     }

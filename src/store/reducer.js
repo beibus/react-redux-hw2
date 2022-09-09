@@ -1,13 +1,15 @@
 import { 
   FETCH_PRODUCTS, 
   RECEIVE_PRODUCTS,
-  SET_MODAL_STATE
+  SET_MODAL_STATE,
+  SET_PRODUCT
 } from './actions';
 
 const initialState = {
   products: [],
   productsLoading: false,
-  isModalOpen: false
+  isModalOpen: false,
+  editProduct: null
 }
 
 export default function reducer(state = initialState, action) {
@@ -16,6 +18,12 @@ export default function reducer(state = initialState, action) {
       return {
         ...state,
         isModalOpen: action.isOpen,
+      }
+
+    case SET_PRODUCT: 
+      return {
+        ...state,
+        editProduct: action.payload,
       }
 
     case FETCH_PRODUCTS: 
