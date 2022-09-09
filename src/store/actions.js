@@ -28,8 +28,20 @@ export const fetchProducts = () => {
 
 export const createProduct = (payload) => {
   return async (dispatch) => {
+
+    let formData = new FormData()
+    Object.keys(payload).forEach(key => {
+      if (key === 'image') {
+        formData.append(key, payload[key]?.file)  
+      } else {
+        formData.append(key, payload[key])  
+      }
+    });
+
+    const data = payload.image ? formData : payload
+    
     try {
-      const response = await axios.post(`${BASE_API_URL}/products/create`, payload);
+      const response = await axios.post(`${BASE_API_URL}/products/create`, data);
       console.log('response', response)
       if (response.status === 201) {
         dispatch(fetchProducts())

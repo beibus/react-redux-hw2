@@ -1,14 +1,17 @@
-import React from "react";
-import { Button, Form, Input } from "antd";
+import React, {useState} from "react";
+import { Button, Form, Input, Upload } from "antd";
 import { createProduct } from '../../store/actions';
 import { useDispatch } from 'react-redux';
 
 export const CreateProduct = () => {
   const dispatch = useDispatch();
-  
+  const [form] =Form.useForm()
+
   const onFinish = (values) => {
     console.log("Success:", values);
+
     dispatch(createProduct(values))
+    form.resetFields()
   };
 
   const onFinishFailed = (errorInfo) => {
@@ -19,6 +22,7 @@ export const CreateProduct = () => {
     <div>
       <h1>Create Product</h1>
       <Form
+        form={form}
         name="basic"
         onFinish={onFinish}
         onFinishFailed={onFinishFailed}
@@ -50,6 +54,21 @@ export const CreateProduct = () => {
           <Input />
         </Form.Item>
 
+        <Form.Item
+          label="Image"
+          name="image"
+          valuePropName="file"
+        >
+          <Upload
+            accept=".png, .jpg"
+            listType='picture-card'
+            beforeUpload={() => false}
+            multiple={false}
+            maxCount={1}
+          >
+            <Button>Upload</Button>
+          </Upload>
+        </Form.Item>
         <Form.Item>
           <Button type="primary" htmlType="submit">
             Save

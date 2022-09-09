@@ -6,14 +6,14 @@ import { CreateProduct } from '../ProductForm/CreateProduct';
 
 export const ProductList = () => {
   const dispatch = useDispatch();
-  const products = useSelector((store) => store.products)
+  const products = useSelector((store) => store.products).sort((a, b) => b.id - a.id)
   const productsLoading = useSelector((store) => store.productsLoading)
 
   useEffect(() => {
     dispatch(fetchProducts())
   }, [])
 
-  console.log('products', products)
+  // console.log('products', products)
   
   return (
     <div>
