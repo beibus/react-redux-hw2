@@ -10,7 +10,7 @@ export const CreateProduct = () => {
 
   useEffect(() => {
     console.log('editProduct', editProduct)
-    // form.setValues(editProduct)
+    // dispatch(form.setValues(editProduct))
   }, [editProduct])
 
   const onFinish = (values) => {
@@ -50,7 +50,21 @@ export const CreateProduct = () => {
             },
           ]}
         >
-          <Input />
+          <Input
+           />
+        </Form.Item>
+        <Form.Item
+          label="Description"
+          name="description"
+          rules={[
+            {
+              required: true,
+              message: "Please input Product Name!",
+            },
+          ]}
+        >
+          <Input
+           />
         </Form.Item>
 
         <Form.Item

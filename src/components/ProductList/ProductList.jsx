@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Avatar, List, Modal,Button } from 'antd';
-import {fetchProducts, setModalState, setEditProduct} from './../../store/actions'
+import {fetchProducts, setModalState, setEditProduct, deleteProduct, updateProduct} from './../../store/actions'
 import { CreateProduct } from '../ProductForm/CreateProduct';
 
 export const ProductList = () => {
@@ -54,7 +54,8 @@ export const ProductList = () => {
               title={<a href="https://ant.design">{item.name}</a>}
               description={<div>{item.price}</div>}
             />
-            <button onClick={() => handleEdit(item)}>Edit</button>
+            <img src="https://cdn-icons-png.flaticon.com/512/1250/1250615.png" alt="" onClick={() => handleEdit(item)} height="30px"/>
+            <img src="https://img.icons8.com/ios-glyphs/344/multiply.png" alt=""  onClick={deleteProduct(item.id)} height="35px" />
           </List.Item>
         )}
       />
