@@ -39,11 +39,14 @@ export const deleteItems=(id)=>({
 
 
 export const fetchProducts = () => {
+
   return async (dispatch) => {
     dispatch(getProducts());
     try {
-      const response = await axios.get(`${BASE_API_URL}/products`);
+      const response = await axios.get(`${BASE_API_URL}/products/`);
       dispatch(setProducts(response.data))
+    console.log('fetch');
+
     } catch (error) {
       console.error(error);
     }
@@ -68,6 +71,7 @@ export const createProduct = (payload) => {
       const response = await axios.post(`${BASE_API_URL}/products/create`, data);
       if (response.status === 201) {
         dispatch(fetchProducts())
+        console.log('Create');
       }
     } catch (error) {
       console.error('ERROR FROM API', error);
@@ -82,6 +86,7 @@ export const deleteProduct = (id) => {
       console.log('response', response)
       if (response.status === 204) {
         dispatch(fetchProducts())
+        console.log('delete');
       }
       console.log(response.data)
     } catch (error) {
@@ -109,6 +114,7 @@ export const editProducts = (payload,id) => {
       const response = await axios.put(`${BASE_API_URL}/products/update/${id}/`,data);
       if (response.status === 200) {
         dispatch(fetchProducts())
+        console.log('Edit');
       }
     } catch (error) {
       console.error(error);

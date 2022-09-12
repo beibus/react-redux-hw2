@@ -1,0 +1,25 @@
+.list-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 100px;
+  padding: 150px 150px;
+}
+
+h1 {
+  margin: 0;
+}
+.list-header {
+  display: flex;
+  align-items: center;
+  width: 70%;
+  justify-content: space-between;
+  padding: 15px;
+  border-radius: 5px;
+}
+
+.list-body {
+  width: 70%;
+  padding: 15px;
+  border-radius: 5px;
+}

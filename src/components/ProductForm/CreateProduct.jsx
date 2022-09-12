@@ -59,19 +59,6 @@ export const CreateProduct = (props) => {
           <Input
            />
         </Form.Item>
-        <Form.Item
-          label="Description"
-          name="description"
-          rules={[
-            {
-              required: true,
-              message: "Please input Product Name!",
-            },
-          ]}
-        >
-          <Input
-           />
-        </Form.Item>
 
         <Form.Item
           label="Price"

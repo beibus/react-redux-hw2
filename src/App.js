@@ -1,4 +1,3 @@
-import logo from './logo.svg';
 import './App.css';
 import { ProductList } from './components/ProductList/ProductList';
 import { useEffect, useState } from "react";
@@ -11,7 +10,7 @@ function App() {
   useEffect(() => {
     const myInterval = setInterval(() => {
       dispatch(fetchProducts())
-    }, 5000);
+    }, 90000);
   }, []);
   return (
     <div className="App">
