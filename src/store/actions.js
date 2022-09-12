@@ -6,7 +6,7 @@ export const RECEIVE_PRODUCTS = 'RECEIVE_PRODUCTS';
 export const SET_MODAL_STATE = 'SET_MODAL_STATE';
 export const SET_PRODUCT = 'SET_PRODUCT';
 export const SET_UPDATED_PRODUCT = 'SET_UPDATED_PRODUCT';
-export const REMOVE_PRODUCT = 'REMOVE_PRODUCT';
+export const DELETE_PRODUCTS='DELETE_PRODUCTS'
 
 export const getProducts = () => ({
   type: FETCH_PRODUCTS
@@ -32,9 +32,10 @@ export const setUpdateProduct = (product) => ({
   payload: product
 })
 
-export const removeProduct = (id) => ({
-  type:REMOVE_PRODUCT,
-}) 
+export const deleteItems=(id)=>({
+  type:DELETE_PRODUCTS,
+  payload: id
+})
 
 
 export const fetchProducts = () => {
@@ -80,7 +81,7 @@ export const deleteProduct = (id) => {
       const response = await axios.delete(`${BASE_API_URL}/products/delete/${id}/`);
       console.log('response', response)
       if (response.status === 204) {
-        dispatch(getProducts(response.data))
+        dispatch(fetchProducts())
       }
       console.log(response.data)
     } catch (error) {
@@ -89,18 +90,26 @@ export const deleteProduct = (id) => {
   }
 }
 
-export const updateProduct = (product) => {
+export const editProducts = (payload,id) => {
   return async (dispatch) => {
-    try {
-      const response = await axios.put(`${BASE_API_URL}/products/update/${product.id}/`,{
-        name: product.name,
-        price: product.price,
-        description: product.description,
+    console.log('id',id)
+    console.log('payload',payload)
+    let formData = new FormData()
+    Object.keys(payload).forEach(key => {
+      if (key === 'image') {
+        formData.append(key, payload[key]?.file)  
+      } else {
+        formData.append(key, payload[key])  
+      }
     });
-      if (response.status <= 204) {
+
+    const data = payload.image ? formData : payload
+    
+    try {
+      const response = await axios.put(`${BASE_API_URL}/products/update/${id}/`,data);
+      if (response.status === 200) {
         dispatch(fetchProducts())
       }
-      console.log(response.data)
     } catch (error) {
       console.error(error);
     }

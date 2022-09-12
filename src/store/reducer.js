@@ -2,14 +2,15 @@ import {
   FETCH_PRODUCTS, 
   RECEIVE_PRODUCTS,
   SET_MODAL_STATE,
-  SET_PRODUCT
+  SET_PRODUCT,
 } from './actions';
 
 const initialState = {
   products: [],
   productsLoading: false,
   isModalOpen: false,
-  editProduct: null
+  editProduct: null,
+  isModalCreate: true
 }
 
 export default function reducer(state = initialState, action) {

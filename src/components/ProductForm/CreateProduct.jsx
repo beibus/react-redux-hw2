@@ -1,22 +1,28 @@
 import React, {useState, useEffect} from "react";
 import { Button, Form, Input, Upload } from "antd";
-import { createProduct, setModalState } from '../../store/actions';
+import { createProduct, setModalState, setEditProduct, editProducts } from '../../store/actions';
 import { useDispatch, useSelector } from 'react-redux';
 
-export const CreateProduct = () => {
+export const CreateProduct = (props) => {
   const dispatch = useDispatch();
   const editProduct = useSelector((store) => store.editProduct)
   const [form] =Form.useForm()
 
   useEffect(() => {
-    console.log('editProduct', editProduct)
-    // dispatch(form.setValues(editProduct))
-  }, [editProduct])
+    if (!editProduct) return
+    form.setFieldsValue(editProduct)
+
+  }, [form, editProduct])
 
   const onFinish = (values) => {
     console.log("Success:", values);
 
-    dispatch(createProduct(values))
+    if (editProduct) {
+      dispatch(editProducts(values, editProduct.id))
+      dispatch(setEditProduct(null))
+    } else {
+      dispatch(createProduct(values))
+    }
 
     setTimeout(() => {
       form.resetFields()  
@@ -97,7 +103,7 @@ export const CreateProduct = () => {
         </Form.Item>
         <Form.Item>
           <Button type="primary" htmlType="submit">
-            Save
+            {props.buttonTitle}
           </Button>
         </Form.Item>
       </Form>

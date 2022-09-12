@@ -1,14 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Avatar, List, Modal,Button } from 'antd';
-import {fetchProducts, setModalState, setEditProduct, deleteProduct, updateProduct} from './../../store/actions'
+import { Avatar, List, Modal,Button, Form } from 'antd';
+import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
+import {fetchProducts, setModalState, setEditProduct, deleteProduct} from './../../store/actions'
 import { CreateProduct } from '../ProductForm/CreateProduct';
+
 
 export const ProductList = () => {
   const dispatch = useDispatch();
   const products = useSelector((store) => store.products).sort((a, b) => b.id - a.id)
   const productsLoading = useSelector((store) => store.productsLoading)
   const isModalOpen = useSelector((store) => store.isModalOpen)
+  const editProduct = useSelector((store) => store.editProduct)
+  const [form] =Form.useForm()
 
   useEffect(() => {
     dispatch(fetchProducts())
@@ -22,26 +26,37 @@ export const ProductList = () => {
 
   const closeModal = () => {
     dispatch(setModalState(false));
+    dispatch(setEditProduct(null))
+    form.resetFields()
   }
 
-  const handleEdit = (product) => {
-    dispatch(setEditProduct(product))
+  const handleEdit = (values) => {
+    dispatch(setEditProduct(values))
     showModal()
+    
   }
+
+  const deleteItem = (values) => {
+    dispatch(deleteProduct(values))
+  }
+
+
+  const title = editProduct ? 'Update' : 'Create'
+  const modalTitle = editProduct ? 'Update Product' : 'Create Product'
 
   return (
     <div>
       <Modal
-        title="Form" 
+        title={modalTitle} 
         open={isModalOpen}
         onCancel={closeModal}
         footer={false}
       >
-        <CreateProduct />
+        <CreateProduct buttonTitle={title} />
       </Modal>
       <h1>Products</h1>
       <Button type="primary" onClick={showModal}>
-        Open Modal
+        Add Product
       </Button>
       <List
         loading={productsLoading}
@@ -51,11 +66,13 @@ export const ProductList = () => {
           <List.Item>
             <List.Item.Meta
               avatar={<Avatar src={item.image} />}
-              title={<a href="https://ant.design">{item.name}</a>}
-              description={<div>{item.price}</div>}
-            />
-            <img src="https://cdn-icons-png.flaticon.com/512/1250/1250615.png" alt="" onClick={() => handleEdit(item)} height="30px"/>
-            <img src="https://img.icons8.com/ios-glyphs/344/multiply.png" alt=""  onClick={deleteProduct(item.id)} height="35px" />
+              title={<div>{item.name}</div>}
+              price={<div>{item.price}</div>}
+              description={<div>{item.description}</div>}
+            /><DeleteOutlined
+            onClick={() => {deleteItem(item.id)}            }
+          />
+          <EditOutlined onClick={() => handleEdit(item)} />
           </List.Item>
         )}
       />
